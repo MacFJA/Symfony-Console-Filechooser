@@ -1,8 +1,6 @@
 <?php
 
-
 namespace MacFJA\Symfony\Console\Filechooser;
-
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -10,10 +8,6 @@ use Symfony\Component\Finder\SplFileInfo;
 /**
  * Class FileFilter
  *
- * @method $this addAdapter(AdapterInterface $adapter, int $priority)
- * @method $this useBestAdapter()
- * @method $this setAdapter(string $name)
- * @method $this removeAdapters()
  * @method $this directories()
  * @method $this date(string $date)
  * @method $this size(string $size)
@@ -29,7 +23,8 @@ use Symfony\Component\Finder\SplFileInfo;
  * @method $this followLinks()
  * @method $this ignoreUnreadableDirs(bool $ignore)
  *
- * @author MacFJA
+ * @author  MacFJA
+ * @license MIT
  * @package MacFJA\Symfony\Console\Filechooser
  */
 class FileFilter
@@ -45,7 +40,7 @@ class FileFilter
      * Constructor.
      *
      * @param string $question The question to ask to the user
-     * @param mixed $default  The default answer to return if the user enters nothing
+     * @param mixed  $default  The default answer to return if the user enters nothing
      */
     public function __construct($question, $default = null)
     {
@@ -161,8 +156,12 @@ class FileFilter
 
     /**
      * Get the list of directory and files that match the current partial path (or its parent directory)
+     *
      * @param string $partialPath
+     *
      * @return array
+     *
+     * @throws \InvalidArgumentException if one of the directories does not exist
      */
     public function getResultFor($partialPath)
     {
@@ -185,16 +184,17 @@ class FileFilter
             if ($file->isDir()) {
                 $filePath .= DIRECTORY_SEPARATOR;
             }
-            if ($path == '/' && $partialPath == '/') {
+            if (DIRECTORY_SEPARATOR === $path && DIRECTORY_SEPARATOR === $partialPath) {
                 $filePath = substr($filePath, 1);
             }
-            $paths[] = $filePath;
+            $paths[] = preg_replace('#'.preg_quote(DIRECTORY_SEPARATOR, '#').'+#', DIRECTORY_SEPARATOR, $filePath);
         }
         return $paths;
     }
 
     /**
      * Return a new Symfony Finder configured
+     *
      * @return Finder
      */
     protected function newFinder()
@@ -206,7 +206,8 @@ class FileFilter
 
     /**
      * Configure a Symfony Finder
-     * @param $finder
+     *
+     * @param Finder $finder
      */
     protected function finderWrapperInject($finder)
     {
@@ -217,18 +218,17 @@ class FileFilter
 
     /**
      * Magic function to wrapper some Symfony Finder method
+     *
      * @param string $name
-     * @param array $arguments
+     * @param array  $arguments
+     *
      * @return $this
+     *
      * @throws \BadMethodCallException
      */
-    function __call($name, $arguments)
+    public function __call($name, $arguments)
     {
         $supportedFinderMethod = array(
-            'addAdapter',
-            'useBestAdapter',
-            'setAdapter',
-            'removeAdapters',
             'directories',
             'date', /*'name', 'notName',*/
             /*'contains', 'notContains', 'path', 'notPath',*/
@@ -246,7 +246,7 @@ class FileFilter
             'ignoreUnreadableDirs' /*, 'append'*/
         );
 
-        if (!in_array($name, $supportedFinderMethod)) {
+        if (!in_array($name, $supportedFinderMethod, true)) {
             throw new \BadMethodCallException();
         }
         $this->finderWrapperAdd($name, $arguments);
@@ -255,8 +255,9 @@ class FileFilter
 
     /**
      * Keep in memory Finder configuration
+     *
      * @param string $method
-     * @param array $args
+     * @param array  $args
      */
     protected function finderWrapperAdd($method, $args)
     {

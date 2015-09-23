@@ -11,8 +11,8 @@
         }
     ],
     "require": {
-        "symfony/finder": "2.6.x-dev",
-        "symfony/console": "2.6.x-dev"
+        "symfony/finder": "~2.6",
+        "symfony/console": "~2.6"
     },
     "autoload": {
         "psr-4": {"MacFJA\\Symfony\\Console\\Filechooser\\": "lib/"}

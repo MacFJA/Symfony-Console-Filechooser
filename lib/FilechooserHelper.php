@@ -1,8 +1,6 @@
 <?php
 
-
 namespace MacFJA\Symfony\Console\Filechooser;
-
 
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Helper\Helper;
@@ -12,7 +10,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 /**
  * Class FilechooserHelper
  *
- * @author MacFJA
+ * @author  MacFJA
+ * @license MIT
  * @package MacFJA\Symfony\Console\Filechooser
  */
 class FilechooserHelper extends Helper
@@ -42,6 +41,7 @@ class FilechooserHelper extends Helper
      * @return string The user answer
      *
      * @throws \RuntimeException If there is no data to read in the input stream
+     * @throws \Exception In case the max number of attempts has been reached and no valid response has been given
      */
     public function ask(InputInterface $input, OutputInterface $output, FileFilter $filter)
     {
@@ -101,7 +101,6 @@ class FilechooserHelper extends Helper
      *
      * @return bool|mixed|null|string
      *
-     * @throws \Exception
      * @throws \RuntimeException
      */
     public function doAsk(OutputInterface $output, FileFilter $filter)
