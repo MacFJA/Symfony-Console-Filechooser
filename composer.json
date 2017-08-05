@@ -4,15 +4,14 @@
     "description": "Filechooser Helper for Symfony2 console (with autocompletion support)",
     "keywords": ["symfony","console","filesystem","file","chooser","interactive","autocompletion","autocomplete"],
     "license": "MIT",
-    "minimum-stability": "dev",
     "authors": [
         {
             "name": "MacFJA"
         }
     ],
     "require": {
-        "symfony/finder": "~2.6",
-        "symfony/console": "~2.6"
+        "symfony/finder": "~2.6 || ^3.0",
+        "symfony/console": "~2.6 || ^3.0"
     },
     "autoload": {
         "psr-4": {"MacFJA\\Symfony\\Console\\Filechooser\\": "lib/"}
