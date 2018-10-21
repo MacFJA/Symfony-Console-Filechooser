@@ -10,7 +10,7 @@ Installation
 ### Composer
 
 ```sh
-composer require macfja/symfony-console-filechooser @dev
+composer require macfja/symfony-console-filechooser
 ```
 
 ### Usage
@@ -30,7 +30,6 @@ $app->register('ask-path')->setCode(function (InputInterface $input, OutputInter
     // ask and validate the answer
     $dialog = $app->getHelperSet()->get('filechooser');
     $filter = new \MacFJA\Symfony\Console\Filechooser\FileFilter('Where is your file? ');
-    //$filter->sortByType();
     $path = $dialog->ask($input, $output, $filter);
     $output->writeln(sprintf('You have just entered: %s', $path));
 });

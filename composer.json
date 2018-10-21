@@ -1,7 +1,7 @@
 {
     "name": "macfja/symfony-console-filechooser",
     "type": "library",
-    "description": "Filechooser Helper for Symfony2 console (with autocompletion support)",
+    "description": "Filechooser Helper for Symfony console (with autocompletion support)",
     "keywords": ["symfony","console","filesystem","file","chooser","interactive","autocompletion","autocomplete"],
     "license": "MIT",
     "authors": [
@@ -10,8 +10,8 @@
         }
     ],
     "require": {
-        "symfony/finder": "~2.6 || ^3.0",
-        "symfony/console": "~2.6 || ^3.0"
+        "hoa/file": "~1",
+        "symfony/console": "~2.6 || ^3.0 || ^4.0"
     },
     "autoload": {
         "psr-4": {"MacFJA\\Symfony\\Console\\Filechooser\\": "lib/"}

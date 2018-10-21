@@ -2,8 +2,8 @@
 
 namespace MacFJA\Symfony\Console\Filechooser;
 
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
+use Hoa\File\Finder;
+use Hoa\File\SplFileInfo;
 
 /**
  * Class FileFilter
@@ -11,17 +11,15 @@ use Symfony\Component\Finder\SplFileInfo;
  * @method $this directories()
  * @method $this date(string $date)
  * @method $this size(string $size)
- * @method $this exclude(string|array $dirs)
- * @method $this ignoreDotFiles(bool $ignoreDotFiles)
- * @method $this ignoreVCS(bool $ignoreVCS)
- * @method $this sort(\Closure $closure)
+ * @method $this dots(bool $ignoreDotFiles)
+ * @method $this sort(callable $callable)
+ * @method $this owner(string $name)
+ * @method $this changed(string $date)
+ * @method $this modified(string $date)
  * @method $this sortByName()
- * @method $this sortByType()
- * @method $this sortByAccessedTime()
- * @method $this sortByChangedTime()
- * @method $this sortByModifiedTime()
- * @method $this followLinks()
- * @method $this ignoreUnreadableDirs(bool $ignore)
+ * @method $this sortBySize()
+ * @method $this followSymlinks()
+ * @method $this filter(callable $callable)
  *
  * @author  MacFJA
  * @license MIT
@@ -175,7 +173,7 @@ class FileFilter
             return array();
         }
 
-        $finder = $this->newFinder()->depth(0)->in($path);
+        $finder = $this->newFinder()->maxDepth(1)->in($path);
 
         $paths = array();
         foreach ($finder as $file) {
@@ -230,20 +228,17 @@ class FileFilter
     {
         $supportedFinderMethod = array(
             'directories',
-            'date', /*'name', 'notName',*/
-            /*'contains', 'notContains', 'path', 'notPath',*/
+            'date',
             'size',
-            'exclude',
-            'ignoreDotFiles',
-            'ignoreVCS',
-            'sort',
+            'dots',
+            'followSymlinks',
+            'owner',
+            'changed',
+            'modified',
             'sortByName',
-            'sortByType',
-            'sortByAccessedTime',
-            'sortByChangedTime',
-            'sortByModifiedTime', /* 'filter',*/
-            'followLinks',
-            'ignoreUnreadableDirs' /*, 'append'*/
+            'sortBySize',
+            'sort',
+            'filter'
         );
 
         if (!in_array($name, $supportedFinderMethod, true)) {

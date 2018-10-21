@@ -16,7 +16,6 @@ $app->register('ask-path')->setCode(
         /** @var FilechooserHelper $dialog */
         $dialog = $app->getHelperSet()->get('filechooser');
         $filter = new FileFilter('Where is your file? ');
-        //$filter->sortByType();
         $color = $dialog->ask($input, $output, $filter);
 
         $output->writeln(sprintf('You have just entered: %s', $color));
